@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="jquery-3.2.1.min.js"></script>
+<link rel="icon" type="image/png" href="slusee.png" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2"/>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1250"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta property="og:image" content="http://radiotavija.atwebpages.com/sluse.jpg" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function (){
+	//$('#proceed').delay(5000).show(2000); 
+    var clicked = localStorage.getItem("btnClicked");
+  
+    if(clicked){
+       $('.container').hide();
+     $('h3').show();
+     
+       
+
+    }
+});
+
+
+
+  $(function(){
+  
+    var date = new Date();
+    date.setTime(date.getTime() + (60 * 1000)); // 5 seconds*/
+
+    
+    $('form#contactform').submit(function(e) {
+        e.preventDefault();// will stop the form being submited...
+        $(this).hide(1000);
+        $('h3').show(1000);
+        localStorage.setItem('btnClicked', true);
+        
+       $.ajax({
+                    type: "POST",
+                    url: "povezii.php",
+                    data: $(this).serialize(),
+                    success: function(data) {
+                        $('#chatbox').show();
+                        $("#chatbox").append(data+"<br/>");//instead this line here you can call some function to read database values and display
+                    },
+                });
+        return false;
+        
+       
+    });
+
+    $('button#pomoc').on('click', function(){
+      localStorage.removeItem("btnClicked");
+    });
+
+    $('#skri').on('click', function(){
+      $('button#pomoc').show(1500);
+    });
+ 
+  });
+
+
+</script>
+
+
+<style>
+p
+{
+font-family: "Comic Sans MS", cursive, sans-serif;
+font-size: 25px;
+}
+body {margin: 0;}
+
+ul.topnav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+   
+}
+
+ul.topnav li {float: left;}
+
+ul.topnav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+ul.topnav li a:hover:not(.active) {background-color: #111;}
+
+ul.topnav li a.active {background-color: #4CAF50;}
+
+ul.topnav li.right {float: right;}
+
+@media screen and (max-width: 600px){
+    ul.topnav li.right,
+    ul.topnav li {float: none;}
+}
+</style>
+</head>
+<body>
+
+<ul class="topnav">
+  <li><a  href="index.html">Pocetna</a></li>
+  <li><a href="usluge.html">Usluge</a></li>
+  <li><a class="active" href="naruci.html">Naruci pjesmu</a></li>
+  <li class="right"><a href="chat.html">Chat</a></li>
+</ul>
+
+<table border = "0" width="100%">
+<tr> 
+<td width="20px"> <img src = "sluse.jpg"/> </td>
+<td> <p> <marquee> Tu je Vas voditelj da Vam ispuni vase muzicke. Najbolja muzika na Balkanu na jednom mjestu. Vas Radio Tavija i ludi voditelj :D </marquee> </p> </td>
+</tr>
+</table>
+<br>
+<div class="container">
+  <form class="form-horizontal" id = "contactform" name="forma">
+  
+       <div class="form-group has-success has-feedback">
+      <label class="col-sm-2 control-label" for="inputSuccess">Od koga:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="odkoga" name="odkoga" placeholder="Nikole Pilipovica">
+        <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+      </div>
+    </div>
+	
+	  <div class="form-group has-success has-feedback">
+      <label class="col-sm-2 control-label" for="inputSuccess">Za koga / Pozdrav:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="zakoga" name="zakoga" placeholder="Najljepse cure :P">
+        <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+      </div>
+    </div>
+	
+	  <div class="form-group has-success has-feedback">
+      <label class="col-sm-2 control-label" for="inputSuccess">Pjesmica:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="pjesmica" name = "pjesmica" placeholder="Mile Kitic - Dotakni me">
+        <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+      </div>
+    </div>
+	<br>
+  <input type="text" style="display: none;" id="chatbox" name="chatbox">
+  <input type="submit" name="button" id="dugme" class="btn btn-success" value="Naruci">
+  
+ </form>
+ 
+ </div>
+<h3 style="display: none;"> Vasa pjesmica ide uskoro. Iskoristili ste svoju muzicku zeljicu za danas! </h3>
+<button style="display: none;" id = "pomoc"> </button>
+<br>
+<button align="center" type="button" id="proceed" style="display: none;" class="btn btn-success">NARUCI OPET</button>
+<br>
+<center><audio autoplay="autoplay" controls="controls"><source src="http://78.129.187.57:34573/;stream.mp3" type="audio/mp3">Your browser does not support the audio element.</audio></center>
+<center><p id="skri"> &#169; </p> <p> <a href = "https://www.facebook.com/nikola.plilipovic" target="_blank"> Nikola Pilipovic </a> </p></center>
+</body>
+</html>
+
