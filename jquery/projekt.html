@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>add demo</title>
+  <style type="text/css">
+  .markiranje
+  {
+  background-color:yellow;
+  }
+  div {
+    width: 60px;
+    height: 60px;
+    margin: 10px;
+    float: left;
+  }
+  p {
+    clear: left;
+    font-weight: bold;
+    font-size: 16px;
+    color: blue;
+    margin: 0 10px;
+    padding: 2px;
+  }
+  </style>
+   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+ <form>
+<input type="text" id="trazi_ime"/> <br>
+<select id="imena" style="display:none">
+<option>
+Luka Milasin
+</option>
+<option>
+Nikola Pilipovic 
+</option>
+<option>
+Borislav Borojevic
+</option>
+<option>
+Srdjan Grubljesic
+</option>
+</select>
+</form>
+<script>
+$(document).ready(function(){
+var size = $('#imena').find('option').length;
+$('#trazi_ime').bind
+(
+{
+
+focusin:function()
+{
+$('#imena').show().attr('size' ,size);
+},
+focusout:function()
+{
+
+},
+keyup:function()
+{
+var vred_txtPolja=$(this).val();
+//$('option').removeClass('markiranje');
+
+if ($.trim(vred_txtPolja) != ' ')
+{
+$('option:contains('+vred_txtPolja+')')
+.addClass('markiranje');
+}
+}
+
+});
+});
+</script>
+ 
+</body>
+</html>

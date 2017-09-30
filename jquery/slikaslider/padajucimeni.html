@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<style type="text/css">
+	#slider {
+    width: 720px;
+    height: 400px;
+    overflow: hidden;
+}
+
+#slider .slides {
+    display: block;
+    width: 6000px;
+    height: 400px;
+    margin: 0;
+    padding: 0;
+}
+
+#slider .slide {
+    float: left;
+    list-style-type: none;
+    width: 720px;
+    height: 400px;
+}
+
+/* helper css, since we don't have images */
+.slide1 {background: red;}
+.slide2 {background: blue;}
+.slide3 {background: green;}
+.slide4 {background: purple;}
+.slide5 {background: pink;}
+
+</style>
+
+<script type="text/javascript">
+'use strict';
+
+
+$(function(){
+ stopSlider();
+ 	//DOM
+	var $slider = $('#slider');
+	var $slidesCont = $slider.find('.slides');
+	var $slajdovi = $slidesCont.find('.slide');
+	var interval;
+
+	//Konfiguracija
+	var width = 720;
+	var animationspeed = 1000;
+	var pause = 1000;
+	var currentslide = 1;
+
+
+	function startSlider (){
+		interval = setInterval(function(){
+			$slidesCont.animate({'margin-left': '-=' +width}, animationspeed, function(){
+				currentslide++;
+				if (currentslide === $slajdovi.length){
+					currentslide = 1;
+					$slidesCont.css('margin-left', 0);
+
+				}
+			});
+		}, pause);
+   	}
+
+	function stopSlider (){
+		clearInterval(interval);
+	}
+	
+	$slidesCont
+	.on('mouseenter', stopSlider)
+	.on('mouseleave', startSlider);
+	
+});	
+
+</script>
+
+	<title></title>
+</head>
+<body>
+
+<div class="container">
+            <div class="header">
+                <h1 class="text-muted">jQuery Basic Slider</h1>
+            </div>
+
+            <div id="slider">
+                <ul class="slides">
+                    <li class="slide slide1">slide1</li>
+                    <li class="slide slide2">slide2</li>
+                    <li class="slide slide3">slide3</li>
+                    <li class="slide slide4">slide4</li>
+                    <li class="slide slide5">slide5</li>
+                    <li class="slide slide1">slide1</li>
+                </ul>
+            </div>
+
+        </div>
+
+</body>
+</html>
